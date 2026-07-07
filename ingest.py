@@ -12,11 +12,11 @@ import os
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_chroma import Chroma
+from langchain_community.vectorstores import FAISS
 
 DOCS_DIR = "docs"
 VECTORSTORE_DIR = "vectorstore"
-EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+EMBEDDING_MODEL = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
 
 
 def cargar_documentos():
@@ -46,8 +46,8 @@ def cargar_documentos():
 def dividir_en_chunks(documentos):
     """Divide los documentos en fragmentos manejables para el RAG."""
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=150,
+        chunk_size=1500,
+        chunk_overlap=250,
         separators=["\n\n", "\n", ". ", " ", ""],
     )
     chunks = splitter.split_documents(documentos)
@@ -56,14 +56,11 @@ def dividir_en_chunks(documentos):
 
 
 def construir_vectorstore(chunks):
-    """Genera embeddings y persiste la base vectorial en disco."""
+    """Genera embeddings y persiste la base vectorial (FAISS) en disco."""
     embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL)
 
-    vectorstore = Chroma.from_documents(
-        documents=chunks,
-        embedding=embeddings,
-        persist_directory=VECTORSTORE_DIR,
-    )
+    vectorstore = FAISS.from_documents(chunks, embeddings)
+    vectorstore.save_local(VECTORSTORE_DIR)
     print(f"Vectorstore creado y guardado en '{VECTORSTORE_DIR}/'.")
     return vectorstore
 
@@ -72,4 +69,4 @@ if __name__ == "__main__":
     docs = cargar_documentos()
     chunks = dividir_en_chunks(docs)
     construir_vectorstore(chunks)
-    print("\n✅ Ingesta completada. Ya puedes correr la app con: streamlit run app.py")
+    print("\n[OK] Ingesta completada. Ya puedes correr la app con: streamlit run app.py")
