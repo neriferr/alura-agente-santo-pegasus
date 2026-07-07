@@ -16,7 +16,7 @@ from langchain_community.vectorstores import FAISS
 
 DOCS_DIR = "docs"
 VECTORSTORE_DIR = "vectorstore"
-EMBEDDING_MODEL = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
+EMBEDDING_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 
 
 def cargar_documentos():

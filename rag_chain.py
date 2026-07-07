@@ -14,7 +14,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 
 VECTORSTORE_DIR = "vectorstore"
-EMBEDDING_MODEL = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
+EMBEDDING_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 
 PROMPT_TEMPLATE = """Eres el Alura Agente de Santo Pegasus Soluciones, un asistente
 interno que responde preguntas de nuevos desarrolladores basándote
