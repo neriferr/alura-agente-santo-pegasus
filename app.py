@@ -53,8 +53,17 @@ if pregunta_usuario:
         st.write(pregunta_usuario)
 
     with st.chat_message("assistant"):
-        with st.spinner("Buscando en el manual..."):
-            respuesta = cadena.invoke(pregunta_usuario)
-        st.write(respuesta)
+        try:
+            with st.spinner("Buscando en el manual..."):
+                respuesta = cadena.invoke(pregunta_usuario)
+            st.write(respuesta)
+        except Exception as e:
+            respuesta = None
+            st.error(
+                "⚠️ Ocurrió un error al consultar a Claude. Verifica que tu "
+                "ANTHROPIC_API_KEY sea válida y tenga crédito disponible.\n\n"
+                f"Detalle técnico: {e}"
+            )
 
-    st.session_state.historial.append((pregunta_usuario, respuesta))
+    if respuesta:
+        st.session_state.historial.append((pregunta_usuario, respuesta))
