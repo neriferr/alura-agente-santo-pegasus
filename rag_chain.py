@@ -7,14 +7,14 @@ para generar una respuesta basada únicamente en el documento.
 
 import os
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_chroma import Chroma
+from langchain_community.vectorstores import FAISS
 from langchain_anthropic import ChatAnthropic
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 
 VECTORSTORE_DIR = "vectorstore"
-EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+EMBEDDING_MODEL = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
 
 PROMPT_TEMPLATE = """Eres el Alura Agente de Santo Pegasus Soluciones, un asistente
 interno que responde preguntas de nuevos desarrolladores basándote
@@ -42,9 +42,10 @@ def formatear_contexto(documentos):
 
 def cargar_vectorstore():
     embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL)
-    return Chroma(
-        persist_directory=VECTORSTORE_DIR,
-        embedding_function=embeddings,
+    return FAISS.load_local(
+        VECTORSTORE_DIR,
+        embeddings,
+        allow_dangerous_deserialization=True,  # seguro: el índice lo generamos nosotros mismos
     )
 
 
@@ -57,11 +58,10 @@ def construir_cadena_rag():
         )
 
     vectorstore = cargar_vectorstore()
-    retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 10})
 
     llm = ChatAnthropic(
         model="claude-sonnet-5",
-        temperature=0,
         max_tokens=1000,
     )
 
