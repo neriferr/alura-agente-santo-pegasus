@@ -142,10 +142,19 @@ santo-pegasus-rag-agent/
 
 > Según el documento, el entorno de Back-end utiliza Java 17+, Spring Boot 3+, Spring Security y Spring Data JPA. Además, el stack tecnológico relacionado incluye: bases de datos (PostgreSQL, MongoDB, Redis), bases vectoriales (Pinecone, Qdrant), infraestructura cloud en AWS (RDS, SES, SQS, Secrets Manager, EC2/ECS), contenedorización (Docker, Docker Compose), CI/CD (GitHub Actions), observabilidad (SLF4J/Logback, Prometheus, Datadog), calidad de código (SonarQube, JUnit 5, Mockito, Testcontainers) y control de versiones (Git, GitFlow, Conventional Commits).
 
-## ☁️ Despliegue en Oracle Cloud (OCI)
+## ☁️ Despliegue en la nube
 
-> _(Se completará con el enlace público y/o captura de pantalla una vez
-> realizado el deploy)_
+La aplicación está desplegada públicamente en **Hugging Face Spaces**:
+
+🔗 **https://neriferr26-alura-agente-santo-pegasus.hf.space/**
+
+Repositorio del Space: https://huggingface.co/spaces/neriferr26/alura-agente-santo-pegasus
+
+> Nota: se optó por Hugging Face Spaces en lugar de OCI Compute (sugerencia original del
+> challenge) por ser una alternativa gratuita, mejor adaptada a aplicaciones con modelos
+> de embeddings (más memoria disponible en su tier gratuito), y con deploy directo desde
+> Git. El challenge permite explícitamente usar la herramienta que mejor se ajuste al
+> proyecto.
 
 ## 👤 Autor
 
