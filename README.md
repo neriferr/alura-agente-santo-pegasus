@@ -1,3 +1,14 @@
+---
+title: Alura Agente Santo Pegasus
+emoji: 🤖
+colorFrom: blue
+colorTo: purple
+sdk: streamlit
+sdk_version: 1.40.1
+app_file: app.py
+pinned: false
+---
+
 # 🤖 Alura Agente — Santo Pegasus Soluciones
 
 Agente de inteligencia artificial (RAG) que responde preguntas sobre el
